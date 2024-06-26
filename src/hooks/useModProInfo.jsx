@@ -1,6 +1,4 @@
-import { useState } from "react";
 import { useQuery } from '@tanstack/react-query';
-
 
 const useModProInfo = (id) => {
     const modProDomain = import.meta.env.VITE_DOMAIN;
@@ -8,10 +6,7 @@ const useModProInfo = (id) => {
 
     const fetchInfo = async () => {
         try {
-            // Constructing the URL correctly
-
             const url = `${modProDomain}/wp-json/wp/clenc/files?api_key=${modProApiKey}&files=${id}`;
-
             const response = await fetch(url);
             console.log("called once")
             if (!response.ok) {
