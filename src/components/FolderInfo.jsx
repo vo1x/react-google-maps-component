@@ -1,8 +1,5 @@
 import FolderItem from './FolderItem';
-import useFileSize from '../../../hooks/useFileSize';
-export default function FolderInfo({ gDriveData, flaggedFiles, contentData }) {
-  const { getReadableFS } = useFileSize();
-
+export default function FolderInfo({ gDriveData, contentData }) {
   return (
     <div className="relative h-max rounded-md border border-white/20 bg-white/5 p-3">
       <div className="flex flex-col justify-between gap-1 p-2">

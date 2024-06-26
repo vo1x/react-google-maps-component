@@ -1,12 +1,7 @@
-import useFileSize from '../../../hooks/useFileSize';
-import { Link } from 'react-router-dom';
-
-import useClipboard from '../../../hooks/useClipboard';
+import useFileSize from '../hooks/useFileSize';
 
 function FolderItem({ item }) {
-  console.log(item);
   const { getReadableFS } = useFileSize();
-  const [copied, handleItemCopy] = useClipboard();
 
   return (
     <div
