@@ -18,6 +18,7 @@ const useModProInfo = (id) => {
             const filteredData = {
                 'id':data?.id,
                 "title":data?.title,
+                
                 "count":data?.count,
                 "files":data?.files
             }
