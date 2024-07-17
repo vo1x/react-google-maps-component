@@ -20,7 +20,7 @@ const MapEmbed = ({ locationCoordinates }: MapEmbedProps) => {
   useEffect(() => {
     const fetchBoundary = async () => {
       try {
-        const boundaryData = await getBoundary(2989349);
+        const boundaryData = await getBoundary(324211); // 324211 => OSM ID for Toronto
         setPolygonPath(boundaryData.coordinates);
       } catch (error) {
         console.error('Error setting polygon path:', error);
