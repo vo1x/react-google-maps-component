@@ -20,7 +20,7 @@ const MapEmbed = ({ locationCoordinates }: MapEmbedProps) => {
   useEffect(() => {
     const fetchBoundary = async () => {
       try {
-        const boundaryData = await getBoundary(1027280);
+        const boundaryData = await getBoundary(2989349);
         setPolygonPath(boundaryData.coordinates);
       } catch (error) {
         console.error('Error setting polygon path:', error);
