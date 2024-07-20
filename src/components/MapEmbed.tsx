@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Map } from '@vis.gl/react-google-maps';
-import './MapEmbed.css';
 import { Polygon } from './Polygon';
 import useOSM from '../hooks/useOSM';
 
@@ -37,9 +36,18 @@ const MapEmbed = ({ locationCoordinates }: MapEmbedProps) => {
         defaultZoom={10}
         gestureHandling={'greedy'}
         disableDefaultUI={true}
-        className="map"
+        className="h-[400px] w-[900px]"
       >
-        <Polygon paths={polygonPath} />
+        {polygonPath && (
+          <Polygon
+            paths={polygonPath}
+            strokeColor={'#FF0000'}
+            strokeOpacity={0.8}
+            strokeWeight={2}
+            fillColor={'#FF0000'}
+            fillOpacity={0.35}
+          />
+        )}
       </Map>
     </div>
   );

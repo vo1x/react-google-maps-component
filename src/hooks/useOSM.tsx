@@ -7,8 +7,7 @@ const useOSM = () => {
       const { data } = await axios.get(url);
       console.log(data);
       if (
-        !data ||
-        !data.geometry.coordinates ||
+        !data?.geometry.coordinates ||
         data.geometry.coordinates.length === 0
       ) {
         throw new Error('Invalid GeoJSON data received');
