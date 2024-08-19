@@ -36,7 +36,7 @@ const MapEmbed = ({ osmID }: MapEmbedProps) => {
       {geometry?.length && <Map
         defaultCenter={center}
         defaultZoom={10}
-        gestureHandling={'greedy'}
+        gestureHandling={'cooperative'}
         disableDefaultUI={true}
         className="h-[400px] w-[900px]"
       >
