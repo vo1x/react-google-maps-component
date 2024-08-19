@@ -1,11 +1,16 @@
 import axios from 'axios';
 
 const useOSM = () => {
-  const getBoundary = async (osmID: number) => {
+
+  const convertCoordinates = (coordinates: [number, number]): { lat: number, lng: number } => ({
+    lat: coordinates[1],
+    lng: coordinates[0],
+  })
+
+  const getOSMDetails = async (osmID: number) => {
     try {
       const url = `https://nominatim.openstreetmap.org/details.php?class=boundary&polygon_geojson=1&format=json&osmtype=R&osmid=${osmID}`;
       const { data } = await axios.get(url);
-      console.log(data);
       if (
         !data?.geometry.coordinates ||
         data.geometry.coordinates.length === 0
@@ -13,22 +18,21 @@ const useOSM = () => {
         throw new Error('Invalid GeoJSON data received');
       }
 
-      const boundaryCords = data.geometry.coordinates[0];
-      const convertedCoordinates = boundaryCords.map(
-        (coords: [number, number]) => ({
-          lat: coords[1],
-          lng: coords[0],
-        }),
-      );
+      const rawCenter = data.centroid.coordinates;
+      const center = convertCoordinates(rawCenter);
 
-      return { coordinates: convertedCoordinates };
+      const rawGeometry = data.geometry.coordinates[0];
+      const geometry = rawGeometry.map(convertCoordinates);
+
+      return { center, geometry };
     } catch (error) {
       console.error('Error fetching boundary:', error);
-      return { coordinates: [] };
+      return { center: { lat: 0, lng: 0 }, geometry: [] };
     }
   };
 
-  return { getBoundary };
+  return { getOSMDetails };
 };
+
 
 export default useOSM;

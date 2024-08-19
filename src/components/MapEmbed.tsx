@@ -9,18 +9,20 @@ interface LocationCoordinates {
 }
 
 interface MapEmbedProps {
-  locationCoordinates: LocationCoordinates;
+  osmID: number;
 }
 
-const MapEmbed = ({ locationCoordinates }: MapEmbedProps) => {
-  const { getBoundary } = useOSM();
-  const [polygonPath, setPolygonPath] = useState<LocationCoordinates[]>([]);
+const MapEmbed = ({ osmID }: MapEmbedProps) => {
+  const { getOSMDetails } = useOSM();
+  const [center, setCenter] = useState<LocationCoordinates>();
+  const [geometry, setGeometry] = useState<LocationCoordinates[]>([]);
 
   useEffect(() => {
     const fetchBoundary = async () => {
       try {
-        const boundaryData = await getBoundary(324211); // 324211 => OSM ID for Toronto
-        setPolygonPath(boundaryData.coordinates);
+        const osmData = await getOSMDetails(osmID);
+        setGeometry(osmData.geometry);
+        setCenter(osmData.center);
       } catch (error) {
         console.error('Error setting polygon path:', error);
       }
@@ -31,24 +33,26 @@ const MapEmbed = ({ locationCoordinates }: MapEmbedProps) => {
 
   return (
     <div>
-      <Map
-        defaultCenter={locationCoordinates}
+      {geometry?.length && <Map
+        defaultCenter={center}
         defaultZoom={10}
         gestureHandling={'greedy'}
         disableDefaultUI={true}
         className="h-[400px] w-[900px]"
       >
-        {polygonPath && (
-          <Polygon
-            paths={polygonPath}
-            strokeColor={'#FF0000'}
-            strokeOpacity={0.8}
-            strokeWeight={2}
-            fillColor={'#FF0000'}
-            fillOpacity={0.35}
-          />
-        )}
+
+        <Polygon
+          paths={geometry}
+          strokeColor={'#0064d1'}
+          strokeOpacity={0.5}
+          strokeWeight={2}
+          fillColor={'#f38924'}
+          fillOpacity={0.25}
+        />
+        )
       </Map>
+      }
+      {!center && 'Loading...'}
     </div>
   );
 };
