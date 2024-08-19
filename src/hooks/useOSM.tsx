@@ -3,7 +3,7 @@ import axios from 'axios';
 const useOSM = () => {
   const getBoundary = async (osmID: number) => {
     try {
-      const url = `https://nominatim.openstreetmap.org/details.php?osmtype=R&osmid=${osmID}&class=boundary&addressdetails=1&hierarchy=0&group_hierarchy=1&polygon_geojson=1&format=json`;
+      const url = `https://nominatim.openstreetmap.org/details.php?class=boundary&polygon_geojson=1&format=json&osmtype=R&osmid=${osmID}`;
       const { data } = await axios.get(url);
       console.log(data);
       if (
